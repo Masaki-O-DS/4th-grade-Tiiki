@@ -13,20 +13,43 @@ const SchedulePage = () => {
           height={430}
           locales={[jaLocale]}
           locale="ja"
+          /* ← ここでヘッダー用のボタン配置 */
+          headerToolbar={{
+            left: "prev,next",
+            center: "title",
+            right: "timeGridWeek,timeGridDay",
+          }}
+          /* ← ここでタイトル書式を上書き */
+          /* グローバルに全ビュー共通にする場合はトップレベルに */
+          titleFormat={{
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+          }}
+          /* もし week ビューだけ変えたいなら views の中で */
+          views={{
+            timeGridWeek: {
+              titleFormat: {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+              },
+            },
+          }}
+          /* カスタム日ヘッダーもそのまま使えます */
           dayHeaderContent={(args) => {
             const date = args.date;
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const weekday = ["日", "月", "火", "水", "木", "金", "土"][
-              date.getDay()
-            ];
+            const M = date.getMonth() + 1;
+            const d = date.getDate();
+            const w = ["日", "月", "火", "水", "木", "金", "土"][date.getDay()];
             return (
               <div>
-                {month}/{day}
-                <br />({weekday})
+                {M}/{d}
+                <br />({w})
               </div>
             );
           }}
+          initialView="timeGridWeek"
         />
       </div>
       <div className="p-2 ">
